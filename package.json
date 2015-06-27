@@ -1,0 +1,31 @@
+{
+  "name": "dmr",
+  "version": "1.0.0",
+  "description": "MapReduce over WebSockets",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "express": "^4.13.0",
+    "ws": "^0.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexmwu/dmr.git"
+  },
+  "keywords": [
+    "MapReduce",
+    "WebSockets"
+  ],
+  "author": "Alex Wu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexmwu/dmr/issues"
+  },
+  "homepage": "https://github.com/alexmwu/dmr"
+}
