@@ -1,12 +1,13 @@
 var WebSocketServer = require('ws').Server,
   wss = new WebSocketServer({port:3000}),
   wordCount = require('./testMapper/wordCounter');
-var mapper = 'hadoop/mapper/map.js';
-var reducer = 'hadoop/reducer/reduce.js';
+var mapper = 'hadoop/mapper/map.js';  // mapper function
+var reducer = 'hadoop/reducer/reduce.js'; // reducer function
+var hadoopStreaming = 'usr/local/Cellar/hadoop/2.6.0/libexec/share/hadoop/tools/lib/hadoop-streaming-2.6.0.';  // location of hadoop streaming jar 
 
 // this section is to test chunking and reducing with a file
 var inFile = 'hadoop/tmp.txt';  // input file to hadoop streaming
-var outFile = 'hadoop/reducerOutput'; // output directory for reducer
+var outFile = 'hadoop/reducerOutput/'; // output directory for reducer
 var path = require('path');
 var chunkSize = 50;
 var words = [];
@@ -15,6 +16,7 @@ var chunkIndex = 0;
 fs.readFile(path.join(__dirname,'db/book-data/pg74.txt'),{encoding: 'utf-8'},function(err,data) {
   if(!err){
     // split by words but rejoin when sending in chunks
+    data = data.replace(/(?:\r\n|\r|\n)/g, '\n');
     words = data.split(" ");
   } else {
     console.error(err);
@@ -38,10 +40,8 @@ wss.on('connection', function connection(ws) {
       // reset chunkIndex
       chunkIndex = 0;
 
-      // write mapper output to output file
-      fs.writeFile(outFile, out);
-
-      
+      // write mapper output to hadoop streaming input file
+      fs.writeFile(inFile, out);
     }
     send['data'] = concat();
     if(ws.readyState != ws.OPEN) {
@@ -75,6 +75,9 @@ function concat() {
 
 // run pass through mapper and reducer in hadoop streaming
 function runReducer() {
-  var cmd = 'hadoop -input ' + inFile + ' -output ' + outFile + ' -mapper ' + mapper +' -reducer ' + reducer;
-  
+  var cmd = 'hadoop jar ' + hadoopStreaming + ' ' + ' -input ' + inFile + ' -output ' + outFile + ' -mapper ' + mapper +' -reducer ' + reducer;
+  exec(cmd, function(err,stdout,stderr) {
+    console.error(err);
+    console.log("Stderr: " + stderr + "\nStdout: " + stdout + "\n");
+  });  
 }

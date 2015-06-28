@@ -1,0 +1,6 @@
+15/06/28 12:28:12 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+15/06/28 12:28:12 INFO Configuration.deprecation: session.id is deprecated. Instead, use dfs.metrics.session-id
+15/06/28 12:28:12 INFO jvm.JvmMetrics: Initializing JVM Metrics with processName=JobTracker, sessionId=
+15/06/28 12:28:12 INFO jvm.JvmMetrics: Cannot initialize JVM Metrics with processName=JobTracker, sessionId= - already initialized
+15/06/28 12:28:12 ERROR streaming.StreamJob: Error Launching job : Output directory file:/Users/civisemployee/projects/dmr/server/hadoop/reducerOutput already exists
+Streaming Command Failed!
