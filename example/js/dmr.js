@@ -1,8 +1,6 @@
 window.onload = function() {
 
   // Get references to elements on the page.
-  var form = document.getElementById('message-form');
-  var messageField = document.getElementById('message');
   var messagesList = document.getElementById('messages');
   var socketStatus = document.getElementById('status');
   var closeBtn = document.getElementById('close');
@@ -20,28 +18,19 @@ window.onload = function() {
     console.log('WebSocket Error: ' + err);
   };
 
-  // Send message when the form is submitted
-  form.onsubmit = function(e) {
-    e.preventDefault();
-
-    // Retrieve the message from the textarea.
-    var message = messageField.value;
-
-    // Send the message through the WebSocket.
-    socket.send(message);
-
-    // Add message to messages list.
-    messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + message + '</li>';
-
-    // Clear out the message field.
-    messageField.value = '';
-
-    return false;
-  };
-
   socket.onmessage = function(evt) {
     var message = evt.data;
+    console.log(message);
+ 
+    // Parse for function and data
     messagesList.innerHTML += '<li class="received"><span>Received:</span>' + message + '</li>';
+    var obj = JSON.parse(message);
+
+    // Send message
+    var func = new Function(obj['function']);
+    var out = func(obj['data']);
+    socket.send(out);
+    messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + out + '</li>';
   };
 
   // Show a disconnected message when the WebSocket is closed.
