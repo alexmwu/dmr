@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "express": "^4.13.0",
+    "sqlite3": "^3.0.8",
     "ws": "^0.7.2"
   },
   "devDependencies": {},

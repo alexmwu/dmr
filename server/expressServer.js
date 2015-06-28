@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
-var rootRoutes = require('routes/rootRoute');
+var api = require('./routes/api');
 
-app.use('/',root);
+app.use('/api',root);
 
 var server = app.listen(8080, function() {
   var host = server.address().address;
