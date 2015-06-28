@@ -24,12 +24,14 @@ window.onload = function() {
     console.log(message);
  
     // Parse for function and data
-    messagesList.innerHTML += '<li class="received"><span>Received:</span>' + message + '</li>';
     var obj = JSON.parse(message);
+    messagesList.innerHTML += '<li class="received"><span>Received:</span>' + obj['data'] + '</li>';
 
     // Send message
-    if('function' in obj)
+    if('function' in obj) {
+      console.log('hioshadfoisahd');
       mapper = new Function('return ' + obj['function'])();
+    }
     var out = mapper(obj['data']);
     socket.send(out);
     messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + out + '</li>';

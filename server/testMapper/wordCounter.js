@@ -20,10 +20,10 @@ var wordCount = function(data) {
   var words = data.split(" ");
   var wordCount = "";
   for(var i = 0;i<words.length;i++) {
-    wordCount += words[i] + "\t1\n";
+    wordCount += words[i].toLowerCase() + "\t1\n";
   }
   return wordCount;
 };
 
 exports.wordCount = wordCount;
-exports.text = text;
+//exports.text = text;
