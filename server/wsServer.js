@@ -5,11 +5,11 @@ var WebSocketServer = require('ws').Server,
 wss.on('connection', function connection(ws) {
   // Callback function for on receive function
   ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+/*    console.log('received: %s', message);
     send = {};
     send['data'] = wordCount.text;
     ws.send(JSON.stringify(send));
-    console.log(send);
+    console.log(send);*/ws.close();
   });
   ws.on('close', function close(message) {
   });
