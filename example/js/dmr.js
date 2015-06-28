@@ -7,7 +7,7 @@ window.onload = function() {
   var closeBtn = document.getElementById('close');
 
   // Create a new WebSocket.
-  var socket = new WebSocket('ws://localhost:3000');
+  var socket = new WebSocket('ws://52.26.175.87:3000');
 
   // Show a connected message when the WebSocket is opened.
   socket.onopen = function(evt) {
