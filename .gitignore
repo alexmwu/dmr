@@ -19,3 +19,9 @@ node_modules/
 
 # .db (sqlite) files
 *.db
+
+# .txt files (book data)
+*.txt
+
+# Venmo oauth key
+oauth_key.js
