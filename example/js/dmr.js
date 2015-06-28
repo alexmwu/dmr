@@ -1,4 +1,5 @@
 window.onload = function() {
+  var mapper;
 
   // Get references to elements on the page.
   var messagesList = document.getElementById('messages');
@@ -27,8 +28,9 @@ window.onload = function() {
     var obj = JSON.parse(message);
 
     // Send message
-    var func = new Function(obj['function']);
-    var out = func(obj['data']);
+    if('function' in obj)
+      mapper = new Function('return ' + obj['function'])();
+    var out = mapper(obj['data']);
     socket.send(out);
     messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + out + '</li>';
   };

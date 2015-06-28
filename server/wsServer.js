@@ -3,21 +3,20 @@ var WebSocketServer = require('ws').Server,
   wordCount = require('./testMapper/wordCounter');
 
 wss.on('connection', function connection(ws) {
-  ws.on('open',function incoming(message) {
-    // Send first code and data
-    var send = {};
-    send['data'] = wordCount.text;
-    send['function'] = wordCount.wordCount.toString();
-    ws.send(JSON.stringify(send));
-  });
+  // Callback function for on receive function
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
-    var send = {};
+    send = {};
     send['data'] = wordCount.text;
-    send['function'] = wordCount.wordCount.toString();
     ws.send(JSON.stringify(send));
+    console.log(send);
   });
   ws.on('close', function close(message) {
   });
-  ws.send("Hello dmr!");
+
+  var send = {};
+  send['data'] = wordCount.text;
+  send['function'] = wordCount.wordCount.toString();
+  ws.send(JSON.stringify(send));
+  console.log(send);
 });
