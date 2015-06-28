@@ -16,3 +16,12 @@ node_modules/
 
 # .swp files
 *.swp
+
+# .db (sqlite) files
+*.db
+
+# .txt files (book data)
+*.txt
+
+# Venmo oauth key
+oauth_key.js
