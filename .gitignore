@@ -28,3 +28,10 @@ oauth_key.js
 
 # aws pem file
 *.pem
+
+# hadoop file
+.*SUCCESS.crc
+.part-*.crc
+_SUCCESS
+part-*
+reducerOutput/	#output folder for MapReduce iteration

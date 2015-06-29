@@ -5,8 +5,6 @@ var stdout = process.stdout;
 var counter = {};
 var input = '';
  
-stdin.setEncoding('utf8');
-stdin.setEncoding('utf8');
 stdin.on('data', function(data) {
   if (data) {
     input += data;
