@@ -20,11 +20,11 @@ node_modules/
 # .db (sqlite) files
 *.db
 
+# env file for dotenv
+.env
+
 # .txt files (book data)
 *.txt
-
-# Venmo oauth key
-oauth_key.js
 
 # aws pem file
 *.pem
