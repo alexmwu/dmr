@@ -6,12 +6,6 @@ var mapper = 'hadoop/mapper/map.py';  // mapper function
 var reducer = 'hadoop/reducer/reduce.py'; // reducer function
 var hadoopStreaming = '/home/ubuntu/hadoop-2.6.0/hadoop-streaming-2.6.0';  // location of hadoop streaming jar 
 
-// send https requests (for venmo api)
-var https = require('https');
-// payment per mapper done
-var payment = 0.001;
-var oauth = require('./oauth_key.js');
-
 // this section is to test chunking and reducing with a file
 var inFile = 'hadoop/tmp.txt';  // input file to hadoop streaming
 var outFile = 'hadoop/reducerOutput/'; // output directory for reducer
@@ -49,31 +43,6 @@ wss.on('connection', function connection(ws) {
 
       // write mapper output to hadoop streaming input file
       fs.writeFile(inFile, out);
-      var amount = payment*Math.floor(words.length/chunkSize).toString();
-      var options = {
-        host: 'sandbox-api.venmo.com',
-        path: '/v1/payments',
-        port: '443',
-        method: 'POST',
-        headers: {
-          'access_token': oauth.venmo,
-          'user_id': '145434160922624933',
-          'note': 'For Mapper Jobs',
-          'amount': amount
-        }
-      };
-      
-      var req = https.request(options,function(response) {
-        var str = ''
-        response.on('data', function (chunk) {
-          str += chunk;
-        });
-      
-        response.on('end', function () {
-          console.log(str);
-        });
-      });
-      req.end(); 
     }
     send['data'] = concat();
     if(ws.readyState != ws.OPEN) {
