@@ -1,19 +1,23 @@
 var WebSocketServer = require('ws').Server,
   wss = new WebSocketServer({port:3000}),
-  wordCount = require('./testMapper/wordCounter');
-var hadoop = '/home/ubuntu/hadoop-2.6.0/bin/hadoop';
-var mapper = 'hadoop/mapper/map.py';  // mapper function
-var reducer = 'hadoop/reducer/reduce.py'; // reducer function
-var hadoopStreaming = '/home/ubuntu/hadoop-2.6.0/hadoop-streaming-2.6.0';  // location of hadoop streaming jar 
+  wordCount = require('./testMapper/wordCounter'),
+  config = require('./config');
+var hadoop = config.hadoop.binary;
+var mapper = config.hadoop.mapper;
+var reducer = config.hadoop.reducer;
+var hadoopStreaming = config.hadoop.streaming_jar;
 
 // this section is to test chunking and reducing with a file
-var inFile = 'hadoop/tmp.txt';  // input file to hadoop streaming
-var outFile = 'hadoop/reducerOutput/'; // output directory for reducer
-var path = require('path');
-var chunkSize = 50;
+var inFile = config.hadoop.streaming_infile;
+var outFile = config.hadoop.streaming_outfile;
+var chunkSize = config.chunk_size;
+
 var words = [];
-var fs = require('fs');
 var chunkIndex = 0;
+// manually reading file
+var fs = require('fs');
+var path = require('path');
+// emulates hadoop's built-in chunking
 fs.readFile(path.join(__dirname,'db/book-data/pg74.txt'),{encoding: 'utf-8'},function(err,data) {
   if(!err){
     // split by words but rejoin when sending in chunks
@@ -25,7 +29,7 @@ fs.readFile(path.join(__dirname,'db/book-data/pg74.txt'),{encoding: 'utf-8'},fun
 });
 var out = ""; // not scalable since stored in memory
 
-// for executing command line code
+// for executing command line Hadoop code
 var exec = require('child_process').exec;
 
 wss.on('connection', function connection(ws) {
